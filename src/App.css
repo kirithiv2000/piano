@@ -27,7 +27,44 @@
 .App-link {
   color: #61dafb;
 }
+.box{
+  height: 150px;
+  width: 100px;
+  border: 1px solid black;
+}
+.black{
+  background-color: black;
+}
+.white{
+  background-color: white;
+}
+.red{
+  background-color: red;
+  
+}
+.score-page{
+  position: absolute;
+  z-index: 39;
+  width: 100%;
+  height: 100%;
+  
 
+}
+.green{
+  background-color: green;
+}
+.row{
+  display: flex;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+.Container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
