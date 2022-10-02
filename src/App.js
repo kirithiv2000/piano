@@ -1,6 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import audioUrl from './utils/0.mp3';
+import audioUrl1 from './utils/1.mp3';
+import audioUrl2 from './utils/2.mp3';
+import audioUrl3 from './utils/3.mp3';
+const audio = new Audio(
+  audioUrl
+);
+const audio1 = new Audio(
+  audioUrl1
+);
+const audio2 = new Audio(
+  audioUrl2
+);
+const audio3 = new Audio(
+  audioUrl3
+);
 /*<div className='score-page'>
       <div className='red'>
         score : 1390
@@ -38,19 +54,53 @@ function randomlyGenerateList(){
   return arr
 }
 function App() {
-  let s = 0
+  const playMusic = (jIndex)=>{
+    if (jIndex==0){
+      audio.play();
+
+    }else if (jIndex==1){
+      audio1.play();
+
+    }else if(jIndex==2){
+      audio2.play()
+    }else if(jIndex==3){
+      audio3.play()
+    }
+ 
+  }
+  const [gameTime ,setGameTime] = useState(2)  
   const [l,setl] = useState([
     [ false, true, false, false],
     [ false, false, false, true],
     [ false, true, false, false],
     [ false, false, false, true],
     [ false, true, false, false],
-    ])
+  ])
   const [gameStatus,SetGameStatus] = useState()
   const [score,setScore] =  useState(0)
+  const removeAndAdd = () =>{
+    const random = randomlyGenerateList()
+    const temp = [...l]
+    temp.splice(l.length-1, 1)
+    temp.splice(0,0,random)
+    setl(temp)
+  }
+  const correct = (jIndex)=>{
+    setScore(score+10)
+    playMusic(jIndex)
+    removeAndAdd()
+  }
+  setTimeout(()=>SetGameStatus(true),gameTime*1000*60)
+
   return (<div className='maindiv'>
      {
       gameStatus===false && <div className='score-page red'>
+        score : {score}
+
+    </div>
+     }
+     {
+      gameStatus===true && <div className='score-page green'>
         score : {score}
 
     </div>
@@ -63,19 +113,15 @@ function App() {
       
       l.map((i,index)=>{
         return <div className='row'>
-          {i.map(j=>{
+          {i.map((j,jIndex)=>{
             return <div className={`box ${j?'black':'white'}`} onClick={()=>{
               console.log("it is clicked",l.length,index)
               if (l.length-1==index){
                 if (!j){
                   SetGameStatus(false)
                 }else{
-                  setScore(score+10)
-                  const random = randomlyGenerateList()
-                  const temp = [...l]
-                  temp.splice(0, 1)
-                  temp.push(random)
-                  setl(temp)
+                  correct(jIndex)
+                
                 }
               }
               
@@ -83,8 +129,9 @@ function App() {
             </div>
           })}
           </div>
-        })
+        }) 
       }
+      
       </div>
     </div>
     </div>
